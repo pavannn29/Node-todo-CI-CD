@@ -1,36 +1,36 @@
 stages:
-	- build
-	- test
-	- push_to_dockerhub
-	- deploy
+- build
+- test
+- push_to_dockerhub
+- deploy
 
 build_job:
-	stage: build
-	scripts:
-		- docker build -t node-app:latest .
-		- echo "A node todo app build succesfully!!"
-	tags: 
-		- Dev
+ stage: build
+ script:
+  - docker build -t node-app:latest .
+  - echo "A node todo app build successfully!!!"
+ tags:
+  - Dev
 
 test_job:
-	stage: test
-	scripts:
-		- echo "Testing a node todo app..."
-	tags: 
-		- Dev
+ stage: test
+ scrpit:
+  - echo "Testing a node app todo app.."
+ tags: 
+  - Dev
 
 push_job:
-	stage: push_to_dockerhub
-	scripts:
-		- docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
-		- docker image tag node-app:latest $DOCKERHUB_USER/node-app:latest
-		- docker push $DOCKERHUB_USER/node-app:latest
-	tags:
-		- Dev
+ stage: push_to_dockerhub
+ script:
+  - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+  - docker image tag node-app:latest $DOCKERHUB_USER/node-app:latest
+  - docker push $DOCKERHUB_USER/node-app:latest
+ tags: 
+  - Dev
 
 deploy_job:
-	stage: deploy
-	scripts:
-		- docker-compose up -d 
-	tags: 
-		- Dev
+ stage: deploy
+ script:
+  - docker compose up -d
+ tags: 
+  - Dev
